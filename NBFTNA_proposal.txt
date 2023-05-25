@@ -1,0 +1,62 @@
+Generate a proposal for a non-blocking fat-tree network architecture which leverages, where appropriate, chapel's parallelism.
+
+Title: Implementing a Non-Blocking Fat-Tree Network Architecture with Chapel Parallelism
+
+Introduction
+The purpose of this proposal is to illustrate the development of a non-blocking fat-tree network architecture using Chapel's powerful parallelism features. By leveraging Chapel's locality-aware programming model, we can efficiently implement the fat-tree topology, which is one of the most popular network topologies for high-performance computing.
+
+Non-Blocking Fat-Tree Network Architecture
+Fat-tree is a hierarchical network architecture characterized by the property that the bandwidth between nodes increases as we move up the hierarchy. In a non-blocking fat-tree architecture, the network can handle as many simultaneous communications as there are nodes, making it highly efficient for parallel computations.
+
+Chapel Parallelism
+Chapel is designed to abstract and simplify the task of writing parallel programs. Its global-view programming model allows for direct access to local or remote variables, making it an excellent language for implementing complex network architectures like fat-tree. Furthermore, Chapel's built-in support for distributed data structures and task parallelism makes it a natural fit for a project of this nature.
+
+Proposed Approach
+We propose to implement the non-blocking fat-tree network as follows:
+
+Network Nodes: We will represent each node in the network as a Chapel 'locale'. A locale in Chapel is a unit of execution locality, which could be a processor, a multicore processor, or even a node in a cluster.
+
+Network Topology: We will define the topology of the network using distributed domains and arrays in Chapel. The 'dmapped' keyword will allow us to specify a custom domain map, effectively describing how the elements of our distributed data structure correspond to the locales in our network.
+
+Communication: For communication between nodes, we will use Chapel's 'on' keyword to designate tasks for execution on specific locales. This will allow us to write locality-aware code that takes advantage of the underlying network architecture.
+
+Non-blocking Communications: Chapel's 'begin' statement will be used to initiate non-blocking communications, allowing tasks to proceed without waiting for network communications to complete.
+
+Expected Benefits
+By leveraging Chapel's parallelism and locality features, we expect to efficiently implement the non-blocking fat-tree network architecture. This approach should allow us to effectively model and simulate the performance of the fat-tree network for a variety of workloads, ultimately leading to deeper insights into the optimal design and operation of such networks.
+
+Future Work
+Once the fat-tree network is implemented, we can explore additional features and optimizations, such as adaptive routing algorithms, load balancing strategies, and fault-tolerance mechanisms, to further enhance the performance and reliability of the network.
+
+Conclusion
+Chapel's rich support for distributed parallel computing makes it an excellent choice for implementing and experimenting with complex network architectures. With this project, we aim to demonstrate the power and flexibility of Chapel for high-performance network simulations.
+
+This proposal provides a high-level overview of the project. The next step would be to flesh out the technical details and formulate a detailed implementation plan.
+
+**Technical Details**
+
+1. **Network Nodes as Chapel Locales**: In Chapel, a 'locale' is an abstraction of a computational unit such as a core, a multicore node, or a network node. This abstraction is ideal for representing network nodes in our non-blocking fat-tree network architecture.
+
+2. **Distributed Domains and Arrays**: Chapel's support for distributed domains and arrays will enable us to construct and manipulate the hierarchical topology of the fat-tree network. The 'dmapped' keyword will allow us to specify a custom domain map, which we'll use to describe the allocation of network node (locale) elements across the fat-tree hierarchy.
+
+3. **Non-blocking Communication**: The asynchronous nature of Chapel's 'begin' statement is ideal for implementing non-blocking communications. By using 'begin' to spawn a task that handles the communication, we can ensure the parent task continues execution without waiting for the network communication to complete. 
+
+4. **Locality-Aware Code**: Chapel's 'on' clause allows us to specify where a particular computation should be performed in terms of locales. This feature is crucial in writing locality-aware code that takes advantage of the underlying fat-tree network architecture.
+
+**Implementation Plan**
+
+1. **Understanding and Modelling Fat-Tree Topology**: To begin with, we need to have a clear understanding of the fat-tree topology and devise an appropriate model that can be implemented using Chapel's distributed domains and arrays. We will design the model in such a way that it reflects the hierarchical nature and the increased bandwidth as we move up the hierarchy of a fat-tree network.
+
+2. **Designing Network Nodes**: Each node in the fat-tree network will be designed as a Chapel locale. The node will handle its communication, computation, and data. The data structure for the node will include its locale information and the necessary data for the computations.
+
+3. **Implementing Network Topology**: After designing the nodes, we will implement the topology of the fat-tree network using Chapel's distributed domains and arrays. We will use the 'dmapped' keyword to describe the allocation of nodes across the fat-tree network.
+
+4. **Implementing Communication**: Once the topology is in place, we will implement the communication between the nodes. We will use Chapel's 'on' clause to designate computations on specific locales and 'begin' statement for non-blocking communications.
+
+5. **Testing**: After the basic implementation, we will test the network with various workloads. We will check the network's performance in terms of its non-blocking communication, and whether the bandwidth is increasing as we move up the hierarchy.
+
+6. **Optimization**: Based on the testing results, we will identify the bottlenecks and areas of improvement. This could include implementing more advanced routing algorithms, improving the non-blocking communication, and adjusting the locale allocation for better performance.
+
+7. **Documentation and Final Review**: Once the network is optimized, we will document the entire process, including the design decisions, implementation details, and the performance results. A final review will be conducted to ensure the network is implemented as per the requirements and is ready for deployment.
+
+Please note that this implementation plan is a high-level overview. The actual implementation could have more steps and might need adjustments based on the specific requirements and constraints of the project.
